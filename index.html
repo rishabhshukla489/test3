@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Get SFTP File</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<h1>Get SFTP File</h1>
+	<form>
+		<label for="host">SFTP Host:</label>
+		<input type="text" id="host" name="host"><br><br>
+		<label for="user">SFTP User:</label>
+		<input type="text" id="user" name="user"><br><br>
+		<label for="password">SFTP Password:</label>
+		<input type="password" id="password" name="password"><br><br>
+		<label for="remote_path">Remote File Path:</label>
+		<input type="text" id="remote_path" name="remote_path"><br><br>
+		<input type="submit" value="Get File">
+	</form>
+
+	<br><br>
+
+	<div id="file_content"></div>
+
+	<script>
+		$('form').submit(function(event) {
+			event.preventDefault();
+			var host = $('#host').val();
+			var user = $('#user').val();
+			var password = $('#password').val();
+			var remote_path = $('#remote_path').val();
+
+			$.get('/get_file', {host: host, user: user, password: password, remote_path: remote_path}, function(response) {
+				$('#file_content').html('<pre>' + response + '</pre>');
+			});
+		});
+	</script>
+</body>
+</html>
