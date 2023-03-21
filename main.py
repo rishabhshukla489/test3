@@ -12,7 +12,9 @@ def get_file():
     sftp_remote_path = request.args.get('remote_path')
 
     # Connect to SFTP server
-    with pysftp.Connection(host=sftp_host, username=sftp_user, password=sftp_pass) as sftp:
+    cnopts = pysftp.CnOpts()
+    cnopts.hostkeys = None  
+    with pysftp.Connection(host=sftp_host, username=sftp_user, password=sftp_pass,cnopts=cnopts) as sftp:
         # Get file content
         with sftp.open(sftp_remote_path) as file:
             file_content = file.read()
